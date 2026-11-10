@@ -1,0 +1,25 @@
+{
+  "name": "Aula 503",
+  "short_name": "Aula 503",
+  "description": "Aprende redes, inteligencia artificial, ingeniería de software y desarrollo web con lecciones, simuladores y laboratorios.",
+  "lang": "es-MX",
+  "dir": "ltr",
+  "id": "./",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#EDF1F6",
+  "theme_color": "#0C131C",
+  "categories": ["education"],
+  "icons": [
+    { "src": "iconos/icono-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "iconos/icono-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Seguir aprendiendo", "url": "./#aprender" },
+    { "name": "Laboratorio", "url": "./#lab" },
+    { "name": "Tareas", "url": "./#tareas" }
+  ]
+}

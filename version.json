@@ -1,0 +1,11 @@
+{
+ "version": "9.0.0",
+ "fecha": "2026-11-10",
+ "novedades": [
+  "Aula 503 ahora es una app: se instala en el iPhone, abre a pantalla completa y funciona sin internet.",
+  "Las actualizaciones llegan solas: la app avisa y solo descarga los archivos que cambiaron.",
+  "Nueva pantalla de Ajustes: copias de seguridad, sincronización, tema claro u oscuro y meta diaria.",
+  "Librerías y fuentes incluidas en la app: la Academia Web ya no depende de un CDN."
+ ],
+ "compilacion": "ac94080a7e"
+}

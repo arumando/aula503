@@ -1,0 +1,113 @@
+/* Horario del grupo 503, materias sin temario cargado y sets de juegos */
+window.AULA = window.AULA || { materias: [], juegos: [] };
+
+AULA.grupo = { escuela: 'Universidad de la Sierra Juárez', carrera: 'Ingeniería en Desarrollo de Software y Sistemas Inteligentes', grupo: '503', semestre: '26-27 A' };
+
+AULA.otras = [
+  { id: 'pdm', nombre: 'Programación de dispositivos móviles', corto: 'Móviles', profe: 'M.M.I. Juan Gabriel Ruiz Ruiz', color: 'pdm',
+    sugeridos: ['Plataformas móviles: Android, iOS, multiplataforma', 'Android Studio y estructura de un proyecto', 'Kotlin básico', 'Activities, ciclo de vida e intents', 'Layouts y Jetpack Compose', 'Listas (RecyclerView / LazyColumn)', 'Persistencia: SharedPreferences, Room/SQLite', 'Consumo de APIs REST', 'Permisos, sensores y cámara', 'Publicación de la app'] },
+  { id: 'so', nombre: 'Fundamentos de Sistemas Operativos', corto: 'Sist. Operativos', profe: 'M.I.S. Celiflora Díaz Jiménez', color: 'so',
+    sugeridos: ['Funciones y estructura de un sistema operativo', 'Procesos e hilos', 'Planificación de CPU (FCFS, SJF, Round Robin)', 'Sincronización: semáforos y secciones críticas', 'Interbloqueos', 'Administración de memoria y paginación', 'Memoria virtual', 'Sistemas de archivos', 'Entrada/salida', 'Línea de comandos en Linux'] },
+  { id: 'web', nombre: 'Tecnologías Web I', corto: 'Web I', profe: 'M.M.I. Juan Gabriel Ruiz Ruiz', color: 'web',
+    sugeridos: ['Cómo funciona la web: cliente, servidor, HTTP', 'HTML semántico', 'Formularios', 'CSS: selectores, modelo de caja', 'Flexbox y Grid', 'Diseño responsivo', 'JavaScript básico', 'DOM y eventos', 'Fetch y JSON', 'Publicar un sitio (Git + hosting)'] },
+  { id: 'ingles', nombre: 'Inglés', corto: 'Inglés', profe: '', color: 'ingles',
+    sugeridos: ['Vocabulario técnico de informática', 'Leer documentación en inglés', 'Tiempos verbales: presente, pasado, futuro', 'Escribir correos formales', 'Presentar un proyecto oralmente'] },
+  { id: 'emp', nombre: 'Emprendimiento e Innovación', corto: 'Emprendimiento', profe: '', color: 'emp',
+    sugeridos: ['Detección de oportunidades', 'Design thinking', 'Lienzo de modelo de negocio (Canvas)', 'Propuesta de valor', 'Producto mínimo viable', 'Validación con clientes', 'Costos y precios', 'Pitch'] }
+];
+
+/* Horario: [día 1-5][hora] = id de materia. Horas de 8 a 16. */
+AULA.horario = {
+  horas: [8, 9, 10, 11, 12, 13, 14, 15],
+  aula: { 8: 'LR/LIA', 9: 'LR/LIA', 10: 'LR/LIA', 11: 'LR', 12: 'E', 13: '', 14: 'LR', 15: 'B4' },
+  dias: {
+    1: { 8: 'pdm', 9: 'is', 10: 'is', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
+    2: { 8: 'pdm', 9: 'ia', 10: 'ia', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
+    3: { 8: 'pdm', 9: 'so', 10: 'so', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'act' },
+    4: { 8: 'pdm', 9: 'so', 10: 'so', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
+    5: { 8: 'ia', 9: 'ia', 10: 'is', 11: 'is', 12: 'ingles', 13: 'receso', 14: 'web' }
+  },
+  /* Bloques sugeridos de estudio en tus horas libres */
+  estudio: [
+    { dia: 1, ini: '16:30', fin: '17:30', materia: 'is', que: 'Repasa lo que vio Ing. de Software hoy y avanza el proyecto' },
+    { dia: 2, ini: '16:30', fin: '17:30', materia: 'ia', que: 'Lección de IA del día y práctica en Colab' },
+    { dia: 3, ini: '16:30', fin: '17:30', materia: 'redes', que: 'Lección de Redes y 10 min de Binario Blaster' },
+    { dia: 4, ini: '16:30', fin: '17:45', materia: 'redes', que: 'Práctica en Packet Tracer y Subnetting Rush' },
+    { dia: 5, ini: '15:00', fin: '16:00', materia: 'todas', que: 'Repaso de tarjetas de la semana y un jefe de unidad' },
+    { dia: 6, ini: '10:00', fin: '12:00', materia: 'todas', que: 'Proyectos: casos de uso, diagramas en StarUML, agente de IA' }
+  ]
+};
+
+/* Juegos tipo "clasificar": cada item va a una cubeta */
+AULA.juegos = [
+  { id: 'osi', materia: 'redes', unidad: 2, tipo: 'clasificar', titulo: '¿En qué capa OSI?', desc: 'Manda cada elemento a su capa.',
+    cubetas: ['Física', 'Enlace', 'Red', 'Transporte', 'Aplicación'],
+    items: [['Cable UTP', 0], ['Hub', 0], ['Fibra óptica', 0], ['Repetidor', 0], ['Bits', 0], ['Switch', 1], ['Dirección MAC', 1], ['Trama', 1], ['FCS', 1], ['Ethernet', 1], ['Router', 2], ['Dirección IP', 2], ['ICMP', 2], ['Paquete', 2], ['TTL', 2], ['TCP', 3], ['UDP', 3], ['Número de puerto', 3], ['Segmento', 3], ['Ventana deslizante', 3], ['HTTP', 4], ['DNS', 4], ['DHCP', 4], ['SMTP', 4], ['SSH', 4]] },
+  { id: 'tcpudp', materia: 'redes', unidad: 6, tipo: 'clasificar', titulo: '¿TCP o UDP?', desc: '¿Confiable o rápido?',
+    cubetas: ['TCP', 'UDP'],
+    items: [['HTTP (80)', 0], ['SSH (22)', 0], ['SMTP (25)', 0], ['FTP (21)', 0], ['POP3 (110)', 0], ['IMAP (143)', 0], ['Telnet (23)', 0], ['RDP (3389)', 0], ['Descargar un PDF', 0], ['DHCP (67/68)', 1], ['TFTP (69)', 1], ['SNMP (161)', 1], ['NTP (123)', 1], ['Videollamada en vivo', 1], ['Juego de disparos en línea', 1], ['Consulta DNS normal', 1]] },
+  { id: 'ipv4tipo', materia: 'redes', unidad: 5, tipo: 'clasificar', titulo: 'Privada, pública o especial', desc: 'Clasifica direcciones IPv4.',
+    cubetas: ['Privada', 'Pública', 'Especial'],
+    items: [['10.20.30.40', 0], ['172.16.5.4', 0], ['172.31.255.254', 0], ['192.168.0.1', 0], ['10.255.0.1', 0], ['8.8.8.8', 1], ['172.32.1.1', 1], ['192.169.1.1', 1], ['11.0.0.1', 1], ['200.33.146.1', 1], ['127.0.0.1', 2], ['169.254.10.5', 2], ['224.0.0.5', 2], ['255.255.255.255', 2]] },
+  { id: 'ipv6tipo', materia: 'redes', unidad: 5, tipo: 'clasificar', titulo: 'Tipos de IPv6', desc: 'GUA, link-local, multicast o loopback.',
+    cubetas: ['Global unicast', 'Link-local', 'Multicast', 'Loopback / no esp.'],
+    items: [['2001:db8::1', 0], ['2800:a4:1::10', 0], ['3001:abcd::1', 0], ['2001:db8:acad:1::1', 0], ['fe80::1', 1], ['fe80::a1b2:3ff:fe4c:5d6e', 1], ['fe80::200', 1], ['ff02::1', 2], ['ff02::2', 2], ['ff05::1:3', 2], ['::1', 3], ['::', 3]] },
+  { id: 'cable', materia: 'redes', unidad: 3, tipo: 'clasificar', titulo: '¿Cable directo o cruzado?', desc: 'Sin Auto-MDIX, como en el examen.',
+    cubetas: ['Directo', 'Cruzado', 'Consola'],
+    items: [['PC → switch', 0], ['Switch → router', 0], ['Servidor → switch', 0], ['AP → switch', 0], ['Switch → switch', 1], ['PC → PC', 1], ['Router → router', 1], ['PC → router (Ethernet)', 1], ['Hub → switch', 1], ['PC → puerto console del router', 2], ['Laptop → puerto console del switch', 2]] },
+  { id: 'aprendizaje', materia: 'ia', unidad: 2, tipo: 'clasificar', titulo: '¿Qué tipo de aprendizaje?', desc: 'Lee el caso y elige el paradigma.',
+    cubetas: ['Supervisado', 'No supervisado', 'Refuerzo', 'Auto-supervisado'],
+    items: [['Detectar spam con correos etiquetados', 0], ['Predecir el precio de casas con ventas pasadas', 0], ['Reconocer dígitos con imágenes etiquetadas', 0], ['Diagnosticar con radiografías revisadas por médicos', 0], ['Agrupar clientes por hábitos de compra', 1], ['Reducir 50 variables a 2 con PCA', 1], ['Detectar tráfico de red anómalo sin ejemplos de ataques', 1], ['Encontrar productos que se compran juntos', 1], ['Robot que aprende a caminar con premios', 2], ['AlphaGo jugando contra sí mismo', 2], ['Control de semáforos que reduce la espera', 2], ['Predecir la siguiente palabra en textos de internet', 3], ['Rellenar palabras enmascaradas (BERT)', 3], ['Reconstruir partes tapadas de una imagen', 3]] },
+  { id: 'tareaia', materia: 'ia', unidad: 4, tipo: 'clasificar', titulo: 'Tarea de IA', desc: '¿Clasificación, regresión, agrupamiento o generación?',
+    cubetas: ['Clasificación', 'Regresión', 'Agrupamiento', 'Generación'],
+    items: [['¿El correo es spam?', 0], ['¿Qué especie aparece en la foto?', 0], ['¿Sentimiento positivo o negativo?', 0], ['¿La transacción es fraude?', 0], ['Temperatura de mañana', 1], ['Precio de un departamento', 1], ['Litros de agua que necesita el cultivo', 1], ['Calificación esperada según horas de estudio', 1], ['Segmentar alumnos por hábitos', 2], ['Agrupar noticias parecidas sin etiquetas', 2], ['Crear una imagen a partir de un texto', 3], ['Redactar un resumen nuevo', 3], ['Sintetizar voz', 3], ['Crear datos sintéticos de pacientes', 3]] },
+  { id: 'agentes', materia: 'ia', unidad: 3, tipo: 'clasificar', titulo: 'Tipos de agente', desc: 'Del reflejo simple al que aprende.',
+    cubetas: ['Reflejo simple', 'Reflejo con modelo', 'Basado en objetivos', 'Basado en utilidad', 'Que aprende'],
+    items: [['Termostato', 0], ['Puerta automática con sensor', 0], ['Aspiradora: si sucio, aspirar', 0], ['Roomba que mapea la casa', 1], ['Auto que recuerda el vehículo en su punto ciego', 1], ['GPS que busca llegar a tu destino', 2], ['Robot que planea cómo salir de un laberinto', 2], ['Auto autónomo que equilibra rapidez y comodidad', 3], ['Agente de vuelos que busca el mejor precio-tiempo', 3], ['Recomendador que mejora con tus clics', 4], ['Filtro de spam que se ajusta con tus reportes', 4]] },
+  { id: 'reqs', materia: 'is', unidad: 3, tipo: 'clasificar', titulo: '¿Qué tipo de requerimiento?', desc: 'Funcional, no funcional o de dominio.',
+    cubetas: ['Funcional', 'No funcional', 'De dominio'],
+    items: [['El alumno podrá descargar su boleta en PDF', 0], ['El sistema enviará un correo al registrar un pedido', 0], ['El administrador podrá dar de baja usuarios', 0], ['El sistema permitirá buscar libros por autor', 0], ['La página cargará en menos de 2 s', 1], ['Funcionará en Android 10 o superior', 1], ['Las contraseñas se guardarán cifradas', 1], ['Disponibilidad de 99% en inscripciones', 1], ['Se desarrollará en Kotlin', 1], ['La calificación mínima aprobatoria es 6.0', 2], ['Un alumno no puede inscribir más de 8 materias', 2], ['El IVA se calcula al 16%', 2]] },
+  { id: 'uml', materia: 'is', unidad: 4, tipo: 'clasificar', titulo: 'Diagramas UML', desc: '¿Estructural o de comportamiento?',
+    cubetas: ['Estructural', 'Comportamiento'],
+    items: [['Clases', 0], ['Objetos', 0], ['Paquetes', 0], ['Componentes', 0], ['Despliegue', 0], ['Artefactos', 0], ['Casos de uso', 1], ['Secuencia', 1], ['Actividades', 1], ['Estados', 1], ['Comunicación (colaboración)', 1], ['Tiempos', 1]] },
+  { id: 'scrum', materia: 'is', unidad: 2, tipo: 'clasificar', titulo: 'Piezas de Scrum', desc: 'Rol, evento o artefacto.',
+    cubetas: ['Rol', 'Evento', 'Artefacto'],
+    items: [['Product Owner', 0], ['Scrum Master', 0], ['Developers', 0], ['Sprint', 1], ['Sprint Planning', 1], ['Daily Scrum', 1], ['Sprint Review', 1], ['Sprint Retrospective', 1], ['Product Backlog', 2], ['Sprint Backlog', 2], ['Incremento', 2]] },
+  { id: 'calidad', materia: 'is', unidad: 1, tipo: 'clasificar', titulo: 'ISO/IEC 25010', desc: '¿Qué característica de calidad es?',
+    cubetas: ['Eficiencia', 'Usabilidad', 'Fiabilidad', 'Seguridad', 'Mantenibilidad'],
+    items: [['Responde en menos de 1 s', 0], ['Usa poca memoria del teléfono', 0], ['Un usuario nuevo aprende a usarlo en 10 min', 1], ['Funciona con lector de pantalla', 1], ['Se recupera solo tras un corte de luz', 2], ['Disponible 99.9% del tiempo', 2], ['Solo el dueño ve sus datos', 3], ['Registra quién modificó cada calificación', 3], ['Cambiar el módulo de pagos no afecta a los demás', 4], ['El código tiene pruebas automáticas', 4]] },
+
+  /* Juegos tipo "ordenar": los pasos van en el orden correcto */
+  { id: 'osiorden', materia: 'redes', unidad: 2, tipo: 'ordenar', titulo: 'Capas OSI de abajo hacia arriba', desc: 'Toca las capas en orden, empezando por la 1.',
+    pasos: ['Física', 'Enlace de datos', 'Red', 'Transporte', 'Sesión', 'Presentación', 'Aplicación'] },
+  { id: 'encap', materia: 'redes', unidad: 2, tipo: 'ordenar', titulo: 'Encapsulamiento', desc: 'Del mensaje de la aplicación al cable.',
+    pasos: ['Datos', 'Segmento', 'Paquete', 'Trama', 'Bits'] },
+  { id: 't568b', materia: 'redes', unidad: 3, tipo: 'ordenar', titulo: 'Ponchado T568B', desc: 'Del pin 1 al pin 8.',
+    pasos: ['Blanco-naranja', 'Naranja', 'Blanco-verde', 'Azul', 'Blanco-azul', 'Verde', 'Blanco-café', 'Café'] },
+  { id: 'dora', materia: 'redes', unidad: 7, tipo: 'ordenar', titulo: 'DHCP paso a paso', desc: 'Así obtiene IP tu laptop.',
+    pasos: ['Discover (cliente busca, broadcast)', 'Offer (servidor ofrece IP)', 'Request (cliente pide la oferta)', 'Acknowledgment (servidor confirma)'] },
+  { id: 'ping', materia: 'redes', unidad: 5, tipo: 'ordenar', titulo: 'Diagnóstico "no hay internet"', desc: 'Orden lógico de pings.',
+    pasos: ['ping 127.0.0.1', 'ping al gateway (192.168.1.1)', 'ping 8.8.8.8', 'ping google.com'] },
+  { id: 'cisco', materia: 'redes', unidad: 8, tipo: 'ordenar', titulo: 'Configurar un switch', desc: 'Del prompt > a guardar.',
+    pasos: ['enable', 'configure terminal', 'hostname S1', 'interface vlan 1', 'ip address 192.168.1.2 255.255.255.0', 'no shutdown', 'end', 'copy running-config startup-config'] },
+  { id: 'historiared', materia: 'redes', unidad: 1, tipo: 'ordenar', titulo: 'Historia de las redes', desc: 'Del más antiguo al más reciente.',
+    pasos: ['Telégrafo (1844)', 'Teléfono (1876)', 'ARPANET (1969)', 'Ethernet (1973)', 'ARPANET adopta TCP/IP (1983)', 'World Wide Web (1989-91)', 'Wi-Fi 802.11 (1997)'] },
+  { id: 'historiaia', materia: 'ia', unidad: 1, tipo: 'ordenar', titulo: 'Línea del tiempo de la IA', desc: 'Del más antiguo al más reciente.',
+    pasos: ['Neurona de McCulloch-Pitts (1943)', 'Artículo de Turing (1950)', 'Conferencia de Dartmouth (1956)', 'Perceptrón (1958)', 'ELIZA (1966)', 'Deep Blue vence a Kasparov (1997)', 'AlexNet (2012)', 'AlphaGo vence a Lee Sedol (2016)', 'Transformer (2017)'] },
+  { id: 'kmeans', materia: 'ia', unidad: 2, tipo: 'ordenar', titulo: 'K-means', desc: 'Los pasos del algoritmo.',
+    pasos: ['Elegir k', 'Colocar k centroides', 'Asignar cada punto al centroide más cercano', 'Mover cada centroide al promedio de sus puntos', 'Repetir hasta que no cambien'] },
+  { id: 'flujoml', materia: 'ia', unidad: 2, tipo: 'ordenar', titulo: 'Proyecto de ML supervisado', desc: 'Del dato al modelo evaluado.',
+    pasos: ['Reunir y etiquetar datos', 'Dividir en entrenamiento y prueba', 'Entrenar el modelo', 'Evaluar con datos de prueba', 'Ajustar y repetir'] },
+  { id: 'cascada', materia: 'is', unidad: 2, tipo: 'ordenar', titulo: 'Modelo en cascada', desc: 'Fases en orden.',
+    pasos: ['Requerimientos', 'Análisis', 'Diseño', 'Codificación', 'Pruebas', 'Implantación', 'Mantenimiento'] },
+  { id: 'up', materia: 'is', unidad: 2, tipo: 'ordenar', titulo: 'Fases del Proceso Unificado', desc: 'Del inicio a la entrega.',
+    pasos: ['Inicio', 'Elaboración', 'Construcción', 'Transición'] },
+  { id: 'sprint', materia: 'is', unidad: 2, tipo: 'ordenar', titulo: 'Un sprint de Scrum', desc: 'Eventos en orden.',
+    pasos: ['Sprint Planning', 'Daily Scrum (cada día)', 'Sprint Review', 'Sprint Retrospective'] },
+  { id: 'ir', materia: 'is', unidad: 3, tipo: 'ordenar', titulo: 'Ingeniería de requerimientos', desc: 'Actividades en orden.',
+    pasos: ['Estudio de viabilidad', 'Obtención y análisis', 'Especificación', 'Validación'] },
+  { id: 'espiral', materia: 'is', unidad: 2, tipo: 'ordenar', titulo: 'Una vuelta de la espiral', desc: 'Los cuatro cuadrantes de Boehm.',
+    pasos: ['Determinar objetivos y alternativas', 'Evaluar alternativas y reducir riesgos', 'Desarrollar y verificar', 'Planear la siguiente vuelta'] },
+  { id: 'pruebas', materia: 'is', unidad: 3, tipo: 'ordenar', titulo: 'Formatos del plan de pruebas', desc: 'Tus formatos FMR_005 en orden.',
+    pasos: ['Planeación de la prueba', 'Diseño de casos de prueba', 'Ejecución de casos de prueba', 'Informe final'] }
+];
