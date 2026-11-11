@@ -238,6 +238,7 @@
       ponerModo: m => { S.web.modo = m; guardar(); },
       cursoInicial: () => S.web.curso || 'base',
       ir: r => { const c = /^\/(\w+)$/.exec(r); if (c) { S.web.curso = c[1]; guardar(); } location.hash = '#academia-' + r; },
+      hayTutor,
       tutor: async (prompt, alTexto) => {
         try { return await pedirTutor(prompt, alTexto); }
         catch (e) { alTexto(e && e.code === 'rate_limited' ? 'El tutor está ocupado. Intenta en un minuto.' : 'No pude preguntarle al tutor.'); return true; }
@@ -369,9 +370,11 @@
     ({ explica: pasoExplica, descubre: pasoDescubre, pregunta: pasoPregunta, ordena: pasoOrdena, mision: pasoMision, lab: pasoLab })[p.tipo](paso, p);
   }
 
+  const hayTutor = () => EN_ARTEFACTO || !!(PF && PF.config.tutor);
   function botonTutor(p, paso) {
     const b = h('button', { type: 'button', class: 'btn-texto' }, '<span class="larga">No entendí, explícamelo más fácil</span><span class="corta">No entendí</span>');
     b.onclick = () => preguntarTutor(p, paso, b);
+    b.hidden = !hayTutor();     // sin tutor de IA conectado, el botón no se muestra (confunde)
     return b;
   }
   // Devuelve false si no hay tutor en este entorno

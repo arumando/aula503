@@ -6,7 +6,7 @@
    - Cada archivo se guarda con su huella (los primeros 16 dígitos de su SHA-256). Al publicar una versión
      nueva solo se descargan los archivos cuya huella cambió, y se comprueba que llegaron completos.
    - La versión nueva queda «en espera» hasta que la persona toca «Actualizar» (o cierra la app). */
-const VERSION = "9.1.0+3689435bab";
+const VERSION = "9.1.1+0f6f98f256";
 const ARCHIVOS = {
  "config.js": "bc557b6f4e36f113",
  "data/extra.js": "d8d20281397d2b36",
@@ -24,7 +24,7 @@ const ARCHIVOS = {
  "img/plano_labredes.png": "6ee371780d8d9026",
  "index.html": "c9e9c58fd02a69fa",
  "js/ajustes.js": "d701033521e02334",
- "js/app.js": "dc007350bdc73b02",
+ "js/app.js": "a54e8d28097dc492",
  "js/arranque.js": "3f3b12bc4d3397be",
  "js/cli.js": "08e8f1a326f0deaa",
  "js/glosario.js": "b7dd88f69d30f59f",
@@ -38,7 +38,7 @@ const ARCHIVOS = {
  "js/netsim.js": "4e28afe22ebd00ed",
  "js/netview.js": "c8b472654ce339a9",
  "js/plataforma.js": "05c79c5aba42e494",
- "js/web/academia.js": "8c31e599592e4927",
+ "js/web/academia.js": "28f33773b6b8e02a",
  "js/web/cm-css.js": "284400b38b5fd38e",
  "js/web/codelab.js": "4d5fe48c23b7b49a",
  "js/web/curso-fundamentos.js": "71d00af5d81a34c5",
@@ -77,7 +77,7 @@ const ARCHIVOS = {
  "vendor/react/react-dom.development.js": "f9044a5e9c39db8b",
  "vendor/react/react.development.js": "28348fef6cb0ed8b",
  "vendor/vue/vue.global.js": "774f70a27925b6b9",
- "version.js": "6a5411dd9bb55145"
+ "version.js": "95e77889383e9a5c"
 };          // { 'js/app.js': 'huella', … }
 const CACHE = 'aula503-archivos';
 const DATOS = 'aula503-datos';

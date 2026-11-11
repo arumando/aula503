@@ -98,7 +98,7 @@
       // Ayuda: ¿qué hace este código?
       const ayuda = h('div', 'wa-btns');
       const tutorBox = h('div');
-      ayuda.appendChild(btn('🤔 ¿Qué hace este código?', '', async () => {
+      if (!api.hayTutor || api.hayTutor()) ayuda.appendChild(btn('🤔 ¿Qué hace este código?', '', async () => {
         tutorBox.className = 'wa-tutor'; tutorBox.textContent = 'Pensando…';
         const codigo = lab.archivos().map(a => '// ' + a.nombre + '\n' + a.codigo).join('\n\n');
         const prompt = 'Eres un tutor paciente de una universidad en Oaxaca. El alumno está aprendiendo ' + curso.nombre + ' desde cero, en el tema «' + L.titulo + '». Explícale en español de México, con palabras sencillas y una analogía cotidiana, qué hace este código línea por línea (agrupa las líneas parecidas) y por qué. Si hay un error, dile dónde está y cómo pensarlo, sin darle todo resuelto. Máximo 220 palabras. Usa **negritas** para los conceptos clave.\n\n' + codigo.slice(0, 5000);
