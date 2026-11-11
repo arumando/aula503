@@ -6,7 +6,7 @@
    - Cada archivo se guarda con su huella (los primeros 16 dígitos de su SHA-256). Al publicar una versión
      nueva solo se descargan los archivos cuya huella cambió, y se comprueba que llegaron completos.
    - La versión nueva queda «en espera» hasta que la persona toca «Actualizar» (o cierra la app). */
-const VERSION = "9.1.2+fb8bed392f";
+const VERSION = "9.2.0+a4bef486d7";
 const ARCHIVOS = {
  "config.js": "bc557b6f4e36f113",
  "data/extra.js": "d8d20281397d2b36",
@@ -24,8 +24,9 @@ const ARCHIVOS = {
  "img/plano_labredes.png": "6ee371780d8d9026",
  "index.html": "656baf93a28e76b3",
  "js/ajustes.js": "d701033521e02334",
- "js/app.js": "ace5d3508fd6dfa0",
+ "js/app.js": "8152aa5ff911340e",
  "js/arranque.js": "3f3b12bc4d3397be",
+ "js/calificaciones.js": "38801f5784b68d0b",
  "js/cli.js": "08e8f1a326f0deaa",
  "js/glosario.js": "b7dd88f69d30f59f",
  "js/horario.js": "5eb3f46dea84f038",
@@ -34,7 +35,7 @@ const ARCHIVOS = {
  "js/lecciones-is.js": "d489cf53a412cba3",
  "js/lecciones-unsij.js": "3a0e1cfa2697f0cc",
  "js/lecciones.js": "092f378a349ab0b3",
- "js/modulos.js": "d48832c60ba6f801",
+ "js/modulos.js": "e6e9bbe8181fef01",
  "js/netsim.js": "4e28afe22ebd00ed",
  "js/netview.js": "c8b472654ce339a9",
  "js/plataforma.js": "05c79c5aba42e494",
@@ -77,7 +78,7 @@ const ARCHIVOS = {
  "vendor/react/react-dom.development.js": "f9044a5e9c39db8b",
  "vendor/react/react.development.js": "28348fef6cb0ed8b",
  "vendor/vue/vue.global.js": "774f70a27925b6b9",
- "version.js": "3fc29c4f9e067df4"
+ "version.js": "60be296aada40b91"
 };          // { 'js/app.js': 'huella', … }
 const CACHE = 'aula503-archivos';
 const DATOS = 'aula503-datos';

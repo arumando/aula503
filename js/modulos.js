@@ -35,6 +35,8 @@ window.AULA_MODULOS = [
     diferidos: ['vendor/babel/babel.min.js', 'vendor/react/react.development.js', 'vendor/react/react-dom.development.js', 'vendor/vue/vue.global.js'] },
   { id: 'horario', nombre: 'Horario y tarjeta «Hoy»', version: '1.0', esencial: false,
     archivos: ['js/horario.js'] },
+  { id: 'notas', nombre: 'Calificaciones', version: '1.0', esencial: false,
+    archivos: ['js/calificaciones.js'] },
   { id: 'ajustes', nombre: 'Ajustes', version: '1.0', esencial: false,
     archivos: ['js/ajustes.js'] },
   { id: 'app', nombre: 'Aplicación (navegación y motor de lecciones)', version: '9.0', esencial: true,

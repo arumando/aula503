@@ -77,7 +77,7 @@
 
   /* ---------- Estado y guardado ---------- */
   const KEY = 'aula503.v2';
-  const base = () => ({ v: 2, xp: 0, dias: {}, lecciones: {}, curso: 'redes', sandbox: null, tareasHechas: {}, meta: 30, retos: {}, ingles: {}, web: {}, mod: 0 });
+  const base = () => ({ v: 2, xp: 0, dias: {}, lecciones: {}, curso: 'redes', sandbox: null, tareasHechas: {}, meta: 30, retos: {}, ingles: {}, web: {}, notas: {}, mod: 0 });
   let S = base();
   const unir = d => { const b = base(); if (!d || typeof d !== 'object') return b; Object.keys(b).forEach(k => { if (d[k] !== undefined) b[k] = (b[k] && typeof b[k] === 'object' && !Array.isArray(b[k]) && d[k] && typeof d[k] === 'object') ? Object.assign({}, b[k], d[k]) : d[k]; }); return b; };
   try { const raw = localStorage.getItem(KEY); if (raw) S = unir(JSON.parse(raw)); else { const viejo = JSON.parse(localStorage.getItem('aula503.v1') || 'null'); if (viejo) { S.xp = viejo.xp || 0; S.dias = viejo.dias || {}; S.tareasHechas = viejo.tareasHechas || {}; } } } catch (e) { /* sin almacenamiento */ }
@@ -789,13 +789,16 @@
     return { dias, texto: dias === 1 ? 'Falta 1 día' : 'Faltan ' + dias + ' días' };
   }
   const fechaLarga = s => { try { return new Date(s).toLocaleString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'America/Mexico_City' }); } catch (e) { return s; } };
-  // Agenda: horario de la semana y tareas, con un selector arriba
+  // Agenda: horario, tareas y calificaciones, con un selector arriba
   function vistaAgenda(v, arg) {
-    const hay = !!window.AULA_HORARIO;
-    const modo = hay && arg !== 'tareas' ? 'horario' : 'tareas';
-    if (hay) {
+    const modos = [];
+    if (window.AULA_HORARIO) modos.push(['horario', 'Horario']);
+    modos.push(['tareas', 'Tareas' + (pendientes() ? ' (' + pendientes() + ')' : '')]);
+    if (window.AULA_NOTAS) modos.push(['notas', 'Notas']);
+    const modo = (modos.find(m => m[0] === arg) || modos[0])[0];
+    if (modos.length > 1) {
       const seg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Agenda', style: 'margin-bottom:14px' });
-      [['horario', 'Horario'], ['tareas', 'Tareas' + (pendientes() ? ' (' + pendientes() + ')' : '')]].forEach(([k, n]) => {
+      modos.forEach(([k, n]) => {
         const b = h('button', { type: 'button', class: 'seg-b' + (modo === k ? ' on' : ''), 'aria-pressed': modo === k }, n);
         b.onclick = () => { location.hash = '#tareas-' + k; };
         seg.appendChild(b);
@@ -805,6 +808,7 @@
     const cuerpo = h('div');
     v.appendChild(cuerpo);
     if (modo === 'horario') window.AULA_HORARIO.pintar(cuerpo, window.Aula);
+    else if (modo === 'notas') window.AULA_NOTAS.pintar(cuerpo, window.Aula);
     else vistaTareas(cuerpo);
   }
   function vistaTareas(v) {
