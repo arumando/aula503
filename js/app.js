@@ -254,6 +254,18 @@
     const sig = siguiente(curso);
     const inicio = (window.AULA_INICIO || []).map(f => { try { return f(v, window.Aula); } catch (e) { return null; } }).filter(Boolean);
     v.innerHTML = '<div class="vista-tit"><h1>Aprende haciendo</h1><p>Cada lección te explica una idea con palabras sencillas, te pone a hacerlo en el simulador y luego te pregunta para ver si te quedó.</p></div>';
+    // Lo primero que quieres hacer: seguir donde te quedaste
+    const seg = h('section', { class: 'seguir c-' + curso.color, 'aria-label': 'Seguir aprendiendo' });
+    const lt = todas(curso), hechasN = lt.filter(l => hecha(l.id)).length;
+    if (sig) {
+      seg.innerHTML = '<div class="seguir-txt"><span class="seguir-eti">Sigue donde te quedaste</span><b>' + esc(sig.titulo) + '</b><span>' + esc(curso.nombre) + ' · lección ' + (hechasN + 1) + ' de ' + lt.length + '</span></div>';
+      const go = h('button', { type: 'button', class: 'btn btn-primario btn-grande' }, 'Continuar');
+      go.onclick = () => abrirLeccion(sig.id);
+      seg.appendChild(go);
+    } else {
+      seg.innerHTML = '<div class="seguir-txt"><span class="seguir-eti">¡Curso terminado!</span><b>' + esc(curso.nombre) + '</b><span>Elige otro curso aquí abajo o repasa las lecciones que quieras.</span></div>';
+    }
+    v.appendChild(seg);
     inicio.forEach(n => v.appendChild(n));
     // En el navegador del iPhone: invitación a instalar la app (una sola vez)
     if (PF && PF.entorno.ios && !PF.entorno.instalada && !PF.entorno.nativa && !localStorage.getItem('aula503.instala')) {

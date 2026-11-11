@@ -753,6 +753,14 @@ html { overflow-x: hidden; overflow-x: clip; }
   .proy-barra { font-size: .66rem; padding: 0 4px; }
   .uml-clase { min-width: 0; max-width: 100%; }
 }
+/* Tarjeta «Sigue donde te quedaste» */
+.seguir { background: var(--cc-band); color: #fff; border-radius: 18px; padding: 16px 18px; display: grid; gap: 12px; margin-bottom: 16px; box-shadow: 0 4px 0 var(--cc-band-deep); }
+.seguir-txt { display: grid; gap: 2px; min-width: 0; }
+.seguir-txt b { font: 800 1.25rem/1.2 var(--f-display); color: #fff; overflow-wrap: anywhere; }
+.seguir-txt span { opacity: .92; font-size: .92rem; }
+.seguir .seguir-eti { text-transform: uppercase; letter-spacing: .08em; font-size: .72rem; font-weight: 800; opacity: .9; }
+.seguir .btn-primario { background: #fff; color: var(--cc-band-deep); border-color: #fff; box-shadow: 0 3px 0 rgba(0, 0, 0, .25); width: 100%; }
+@media (pointer: coarse) { .btn, .chip, .seg-b, .tab { min-height: 44px; } .chip.mini { min-height: 36px; } }
 /* Tabletas y ventanas angostas: la barra de arriba no debe partirse en dos renglones */
 .tab { white-space: nowrap; }
 @media (min-width: 761px) and (max-width: 1040px) { .tabs { margin-left: 4px; gap: 2px; } .tab { padding: .45em .55em; font-size: .88rem; gap: 6px; } .stat .lbl { display: none; } .top { gap: 10px; } }

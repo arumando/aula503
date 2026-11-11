@@ -6,7 +6,7 @@
    - Cada archivo se guarda con su huella (los primeros 16 dígitos de su SHA-256). Al publicar una versión
      nueva solo se descargan los archivos cuya huella cambió, y se comprueba que llegaron completos.
    - La versión nueva queda «en espera» hasta que la persona toca «Actualizar» (o cierra la app). */
-const VERSION = "9.1.1+0f6f98f256";
+const VERSION = "9.1.2+fb8bed392f";
 const ARCHIVOS = {
  "config.js": "bc557b6f4e36f113",
  "data/extra.js": "d8d20281397d2b36",
@@ -22,9 +22,9 @@ const ARCHIVOS = {
  "iconos/icono-512.png": "429f55ba32194ebc",
  "iconos/icono-maskable-512.png": "ef4b90292afa6949",
  "img/plano_labredes.png": "6ee371780d8d9026",
- "index.html": "c9e9c58fd02a69fa",
+ "index.html": "656baf93a28e76b3",
  "js/ajustes.js": "d701033521e02334",
- "js/app.js": "a54e8d28097dc492",
+ "js/app.js": "ace5d3508fd6dfa0",
  "js/arranque.js": "3f3b12bc4d3397be",
  "js/cli.js": "08e8f1a326f0deaa",
  "js/glosario.js": "b7dd88f69d30f59f",
@@ -77,7 +77,7 @@ const ARCHIVOS = {
  "vendor/react/react-dom.development.js": "f9044a5e9c39db8b",
  "vendor/react/react.development.js": "28348fef6cb0ed8b",
  "vendor/vue/vue.global.js": "774f70a27925b6b9",
- "version.js": "95e77889383e9a5c"
+ "version.js": "3fc29c4f9e067df4"
 };          // { 'js/app.js': 'huella', … }
 const CACHE = 'aula503-archivos';
 const DATOS = 'aula503-datos';
