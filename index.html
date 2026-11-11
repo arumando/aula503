@@ -473,7 +473,7 @@ fieldset.iface legend { font: 700 .82rem var(--f-mono); padding: 0 4px; }
 .check input { width: 20px; height: 20px; accent-color: var(--ok); }
 .vacio { background: var(--surface); border: 1.5px dashed var(--line); border-radius: 18px; padding: 26px; text-align: center; color: var(--muted); }
 .lecturas-grid { display: grid; grid-template-columns: 270px minmax(0, 1fr); gap: 20px; align-items: start; }
-@media (max-width: 860px) { .lecturas-grid { grid-template-columns: 1fr; } .indice { max-height: 320px !important; } }
+@media (max-width: 860px) { .lecturas-grid { grid-template-columns: minmax(0, 1fr); } .indice { max-height: 320px !important; } }
 .indice { background: var(--surface); border: 1.5px solid var(--line); border-radius: 18px; padding: 12px; display: grid; gap: 2px; max-height: 75vh; overflow-y: auto; }
 .indice h4 { font-size: .74rem; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); margin: 10px 6px 4px; font-family: var(--f-ui); }
 .indice a { text-decoration: none; color: var(--fg); padding: 6px 8px; border-radius: 9px; font-size: .93rem; }
@@ -721,6 +721,38 @@ body::before { content: ''; position: fixed; inset: 0 0 auto 0; height: env(safe
 .aj-mods { list-style: none; margin: 0; padding: 0; display: grid; }
 .aj-mods li { display: flex; justify-content: space-between; gap: 12px; padding: 7px 0; border-top: 1px solid var(--line); font-size: .93rem; }
 .aj-mods li:first-child { border-top: 0; }
+/* ===== Teléfono: nada obliga a mover la pantalla de lado ===== */
+/* Red de seguridad: aunque algo se pase, la página nunca se mueve de lado */
+html { overflow-x: hidden; overflow-x: clip; }
+.app, main, #vista, #vista > * { min-width: 0; max-width: 100%; }
+.lectura, .tarea, .lec-paso, .wa-lec, .texto, .md, .facil, .tutor, .hoy-card { overflow-wrap: anywhere; }
+.lecturas-grid > *, .lab-layout > *, .mision > *, .camino-wrap > * { min-width: 0; }
+
+/* En pantallas angostas el dibujo se achica; estas letras se agrandan en proporción para seguir leyéndose (≈11 px reales) */
+.sim { --esc: .7; }
+@container (max-width: 560px) {
+  .equipo-nombre { font-size: min(30px, calc(11.5px / var(--esc))); stroke-width: calc(3.5px / var(--esc)); }
+  .equipo-ip { font-size: min(24px, calc(9.5px / var(--esc))); stroke-width: calc(3.5px / var(--esc)); }
+  .puerto-txt { font-size: min(22px, calc(8.5px / var(--esc))); stroke-width: calc(3px / var(--esc)); }
+  .sim.muchos .equipo-ip { display: none; }
+}
+@media (max-width: 640px) {
+  /* Cuadrículas de una sola columna: la columna nunca crece más que la pantalla por culpa de su contenido */
+  .lectura, .tarea, .tarjeta, .lec-paso, .texto, .md, .lab, .lab-zona, .lab-asp, .lab-neu, .lab-lab, .lab-clas, .lab-proy, .lab-sprint,
+  .guia, .instr, .metas, .sim, .tareas, .tutor, .aj, .hoy-card, .vista-tit, .unidad, .facil, .final, .mision, .lado { grid-template-columns: minmax(0, 1fr); }
+  .tbl { overflow-x: visible; }
+  .tbl table { min-width: 0; width: 100%; font-size: .82rem; }
+  .tbl th, .tbl td { padding: 5px 6px; overflow-wrap: anywhere; }
+  pre.code, .wa-texto pre { white-space: pre-wrap; overflow-wrap: anywhere; overflow-x: visible; font-size: .8rem; }
+  .casos-wrap { overflow-x: visible; }
+  .casos { min-width: 0; }
+  .cu-caso-t { font-size: 15px; } .cu-actor text { font-size: 15px; } .cu-sis-t { font-size: 16px; }
+  .proy-linea { overflow-x: visible; }
+  .proy-sem, .proy-barras { min-width: 0; grid-template-columns: repeat(18, minmax(0, 1fr)); gap: 2px; }
+  .proy-sem span { font-size: .58rem; }
+  .proy-barra { font-size: .66rem; padding: 0 4px; }
+  .uml-clase { min-width: 0; max-width: 100%; }
+}
 /* Tabletas y ventanas angostas: la barra de arriba no debe partirse en dos renglones */
 .tab { white-space: nowrap; }
 @media (min-width: 761px) and (max-width: 1040px) { .tabs { margin-left: 4px; gap: 2px; } .tab { padding: .45em .55em; font-size: .88rem; gap: 6px; } .stat .lbl { display: none; } .top { gap: 10px; } }

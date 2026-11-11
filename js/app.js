@@ -18,6 +18,7 @@
     lab: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="5" rx="1"/><rect x="2" y="17" width="6" height="5" rx="1"/><rect x="16" y="17" width="6" height="5" rx="1"/><path d="M12 7v5M5 17v-3h14v3"/></svg>',
     tareas: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4M9 17h6"/></svg>',
     libro: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4.5A2.5 2.5 0 0 1 6.5 2H20v17H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 21.5A2.5 2.5 0 0 1 6.5 19H20v3H6.5"/></svg>',
+    agenda: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="15.5" rx="2.5"/><path d="M3.5 10h17M8 3v4M16 3v4M8 14h2M14 14h2M8 17.5h2"/></svg>',
     fuego: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2c1 3.2-1.2 4.6-2.6 6.5C8 10.4 7 12 7 14.3A5 5 0 0 0 12 19.5a5 5 0 0 0 5-5.2c0-2.3-1.2-4-2.2-5.3.1 1.6-.6 2.7-1.6 3.1.5-3.3-.1-7.6-1.2-10.1z"/></svg>',
     rayo: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>',
     check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
@@ -113,6 +114,10 @@
         const r = ruta();
         if (!lec && (r.v === 'tareas' || r.v === 'aprender')) render();
       });
+      try {
+        const d = PF.respaldo.diasDesdeUltimo(), hoyK = hoy();
+        if (S.xp > 0 && (d === null || d > 7) && localStorage.getItem('aula503.avisoRespaldo') !== hoyK) { localStorage.setItem('aula503.avisoRespaldo', hoyK); setTimeout(() => aviso('Guarda un respaldo de tu avance: Ajustes → Copia de seguridad.'), 2500); }
+      } catch (e) { /* sin almacenamiento */ }
       if (PF.actualizaciones.hayNovedades()) { aviso('Aula 503 se actualizó a la versión ' + PF.version.version + '. Mira las novedades en Ajustes.'); PF.actualizaciones.marcarVisto(); }
       return;
     }
@@ -189,7 +194,7 @@
     const [v, ...resto] = hsh.split('-');
     return { v: v || 'aprender', arg: resto.join('-') };
   }
-  const TABS = [['aprender', 'Aprender', I.camino], ['academia', 'Academia Web', I.codigo], ['lab', 'Laboratorio', I.lab], ['tareas', 'Tareas', I.tareas], ['lecturas', 'Lecturas', I.libro]];
+  const TABS = [['aprender', 'Aprender', I.camino], ['academia', 'Academia Web', I.codigo], ['lab', 'Laboratorio', I.lab], ['tareas', 'Agenda', I.agenda], ['lecturas', 'Lecturas', I.libro]];
   function pendientes() { const ahora = Date.now(); return TAREAS.filter(t => !S.tareasHechas[t.id] && new Date(t.vence).getTime() > ahora).length; }
   VISTAS.filter(x => x.lugar === 'tabs').forEach(x => TABS.push([x.id, x.titulo, x.icono || I.estrella]));
   function pintarTabs() {
@@ -211,7 +216,7 @@
     if (extra) extra.pintar(v, r.arg, window.Aula);
     else if (r.v === 'academia') vistaAcademia(v, r.arg);
     else if (r.v === 'lab') vistaLab(v, r.arg || 'red');
-    else if (r.v === 'tareas') vistaTareas(v);
+    else if (r.v === 'tareas') vistaAgenda(v, r.arg);
     else if (r.v === 'lecturas') vistaLecturas(v, r.arg);
     else vistaCamino(v);
     window.scrollTo(0, 0);
@@ -246,7 +251,9 @@
   function vistaCamino(v) {
     const curso = CURSOS.find(c => c.id === S.curso) || CURSOS[0];
     const sig = siguiente(curso);
+    const inicio = (window.AULA_INICIO || []).map(f => { try { return f(v, window.Aula); } catch (e) { return null; } }).filter(Boolean);
     v.innerHTML = '<div class="vista-tit"><h1>Aprende haciendo</h1><p>Cada lección te explica una idea con palabras sencillas, te pone a hacerlo en el simulador y luego te pregunta para ver si te quedó.</p></div>';
+    inicio.forEach(n => v.appendChild(n));
     // En el navegador del iPhone: invitación a instalar la app (una sola vez)
     if (PF && PF.entorno.ios && !PF.entorno.instalada && !PF.entorno.nativa && !localStorage.getItem('aula503.instala')) {
       const ins = h('div', { class: 'instala' }, '<p><b>Instala Aula 503 en tu iPhone.</b> Se abre a pantalla completa y funciona sin internet.</p>');
@@ -767,10 +774,28 @@
     return { dias, texto: dias === 1 ? 'Falta 1 día' : 'Faltan ' + dias + ' días' };
   }
   const fechaLarga = s => { try { return new Date(s).toLocaleString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', hour: 'numeric', minute: '2-digit', timeZone: 'America/Mexico_City' }); } catch (e) { return s; } };
+  // Agenda: horario de la semana y tareas, con un selector arriba
+  function vistaAgenda(v, arg) {
+    const hay = !!window.AULA_HORARIO;
+    const modo = hay && arg !== 'tareas' ? 'horario' : 'tareas';
+    if (hay) {
+      const seg = h('div', { class: 'seg', role: 'group', 'aria-label': 'Agenda', style: 'margin-bottom:14px' });
+      [['horario', 'Horario'], ['tareas', 'Tareas' + (pendientes() ? ' (' + pendientes() + ')' : '')]].forEach(([k, n]) => {
+        const b = h('button', { type: 'button', class: 'seg-b' + (modo === k ? ' on' : ''), 'aria-pressed': modo === k }, n);
+        b.onclick = () => { location.hash = '#tareas-' + k; };
+        seg.appendChild(b);
+      });
+      v.appendChild(seg);
+    }
+    const cuerpo = h('div');
+    v.appendChild(cuerpo);
+    if (modo === 'horario') window.AULA_HORARIO.pintar(cuerpo, window.Aula);
+    else vistaTareas(cuerpo);
+  }
   function vistaTareas(v) {
     v.innerHTML = '<div class="vista-tit"><h1>Tus tareas</h1><p>Se actualizan desde tu calendario de Moodle UNSIJ. Marca las que ya entregaste.</p></div>';
     if (!TAREAS.length) {
-      v.appendChild(h('div', { class: 'vacio' }, estadoTareas === 'cargando' ? 'Cargando tus tareas…' : 'Aquí aparecerán tus tareas de Moodle cuando se publique el archivo de tareas (datos/tareas.json).'));
+      v.appendChild(h('div', { class: 'vacio' }, estadoTareas === 'cargando' ? 'Cargando tus tareas…' : 'Todavía no hay tareas en este dispositivo. Impórtalas desde Ajustes → Copia de seguridad → «Importar archivo», con tu paquete personal.'));
       return;
     }
     const ahora = Date.now();
@@ -852,9 +877,34 @@
   }
 
   if (/^(localhost|127\.0\.0\.1)$/.test(location.hostname)) window.aulaDev = { abrir: abrirLeccion, ir: n => { lec.i = n; pintarPaso(); }, tareas: l => { TAREAS = l; estadoTareas = 'lista'; render(); } };
+  // Reemplaza las tareas mostradas (las usa Ajustes al importar el paquete personal)
+  function cargarTareas(lista) {
+    TAREAS = (lista || []).filter(t => t && t.titulo && t.vence).sort((a, b) => a.vence < b.vence ? -1 : 1);
+    estadoTareas = 'lista';
+    pintarTabs();
+  }
+  /* Dibujos hechos con letras (capas OSI, tramas…): en el teléfono se achica la letra hasta que quepan completos,
+     para no cortar el dibujo ni obligar a moverse de lado. El código normal se parte en renglones. */
+  function ajustarCodigos() {
+    if (window.innerWidth > 640) return;
+    document.querySelectorAll('pre.code:not([data-fit]), .wa-texto pre:not([data-fit])').forEach(pre => {
+      if (!pre.clientWidth) return;                       // dentro de un cuadro cerrado: se ajusta cuando se abra
+      pre.dataset.fit = '1';
+      if (!/ {3,}/.test(pre.textContent)) return;
+      pre.style.whiteSpace = 'pre';
+      let t = parseFloat(getComputedStyle(pre).fontSize);
+      while (pre.scrollWidth > pre.clientWidth + 1 && t > 8.5) { t -= 0.5; pre.style.fontSize = t + 'px'; }
+      if (pre.scrollWidth > pre.clientWidth + 1) { pre.style.whiteSpace = 'pre-wrap'; pre.style.fontSize = ''; }   // no cabe ni así: se parte en renglones
+    });
+  }
+  let tFit = null;
+  new MutationObserver(() => { clearTimeout(tFit); tFit = setTimeout(ajustarCodigos, 60); }).observe(document.body, { childList: true, subtree: true });
+  document.addEventListener('toggle', () => setTimeout(ajustarCodigos, 30), true);
+
   // Lo que un módulo puede usar sin tocar este archivo (ver docs/MODULOS.md)
   window.Aula = {
-    estado: () => S, guardar, adoptar, render, aviso, sumarXp, racha, xpHoy, pintarTabs,
+    estado: () => S, guardar, adoptar, tareas: () => TAREAS, tareaHecha: id => !!S.tareasHechas[id], faltan, cargarTareas,
+    render, aviso, sumarXp, racha, xpHoy, pintarTabs,
     ir: r => { location.hash = '#' + r; },
     util: { h, esc, md, iconos: I },
     cursos: CURSOS,

@@ -103,13 +103,23 @@
       else {
         const xs = red.devs.map(d => d.x), ys = red.devs.map(d => d.y);
         let x0 = Math.min(...xs) - 95, x1 = Math.max(...xs) + 95, y0 = Math.min(...ys) - 75, y1 = Math.max(...ys) + 100;
-        let w = Math.max(x1 - x0, 520), hh = Math.max(y1 - y0, 280);
+        let w = Math.max(x1 - x0, window.innerWidth < 640 ? 420 : 520), hh = Math.max(y1 - y0, 280);
         if (hh < w * 0.42) hh = w * 0.42;
         const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
         vb = { x: cx - w / 2, y: cy - hh / 2, w, h: hh };
       }
       svg.setAttribute('viewBox', [vb.x, vb.y, vb.w, vb.h].map(Math.round).join(' '));
+      escalar();
     }
+    // Cuántos píxeles de pantalla mide cada unidad del dibujo: el CSS la usa para que los nombres se lean (≈11 px) aunque el dibujo se achique
+    function escalar() {
+      const ancho = svg.clientWidth || lienzoWrap.clientWidth || 0;
+      if (ancho) el.style.setProperty('--esc', (ancho / vb.w).toFixed(3));
+      el.classList.toggle('muchos', red.devs.length > 5);
+    }
+    if (window.ResizeObserver) new ResizeObserver(() => escalar()).observe(lienzoWrap);
+    window.addEventListener('resize', escalar);
+    setTimeout(escalar, 50); setTimeout(escalar, 500);   // por si el dibujo aún no estaba en la pantalla cuando se creó
     [capaGrid, capaLinks, capaDevs, capaPaquetes, capaGuia].forEach(c => svg.appendChild(c));
     const narrador = h('div', { class: 'sim-narrador', 'aria-live': 'polite' });
     narrador.innerHTML = '<span class="sim-narr-ico">●</span><span>' + (o.textoInicial || 'Toca un equipo para ver sus datos. Para enviar un mensaje, abre una PC y usa <b>Enviar ping</b>.') + '</span>';

@@ -66,24 +66,28 @@
 
     /* ----- Copia de seguridad ----- */
     const t4 = tarjeta('Copia de seguridad', '<p>Tu avance se guarda solo en este dispositivo cada vez que haces algo. Un respaldo es un archivo con todo tu avance: guárdalo fuera del teléfono para no perderlo si lo cambias o se descompone.</p>');
+    const dias = PF.respaldo.diasDesdeUltimo();
+    t4.appendChild(h('p', { class: 'aj-estado' + (dias === null || dias > 7 ? ' malo' : '') }, dias === null ? 'Todavía no has guardado ningún respaldo.' : dias === 0 ? 'Último respaldo: hoy.' : 'Último respaldo: hace ' + dias + (dias === 1 ? ' día.' : ' días.')));
     const estadoResp = h('p', { class: 'aj-estado', 'aria-live': 'polite' });
     const entrada = h('input', { type: 'file', accept: '.json,application/json,text/plain', hidden: '' });
     const importar = async (texto) => {
       try {
         const nuevo = PF.respaldo.leer(texto);
         const lecc = Object.keys(nuevo.lecciones || {}).length;
-        if (!root.confirm('El respaldo tiene ' + (nuevo.xp || 0) + ' XP y ' + lecc + ' lecciones del Camino.\n\nSe va a COMBINAR con lo que tienes aquí (no se pierde avance de ninguno de los dos). ¿Continuar?')) return;
+        const tareasNuevas = PF.respaldo.tareasDe(texto);
+        if (!root.confirm('El respaldo tiene ' + (nuevo.xp || 0) + ' XP y ' + lecc + ' lecciones del Camino' + (tareasNuevas.length ? ' y ' + tareasNuevas.length + ' tareas' : '') + '.\n\nSe va a COMBINAR con lo que tienes aquí (no se pierde avance de ninguno de los dos). ¿Continuar?')) return;
+        if (tareasNuevas.length) { PF.tareasGuardar(tareasNuevas); Aula.cargarTareas(tareasNuevas); }
         await PF.copias.guardar(Aula.estado(), 'antes de importar');
         Aula.adoptar(PF.fusionar(Aula.estado(), nuevo));
         Aula.guardar();
-        Aula.aviso('Respaldo importado.');
+        Aula.aviso('Respaldo importado.' + (tareasNuevas.length ? ' Tareas: ' + tareasNuevas.length + '.' : ''));
       } catch (e) { estadoResp.innerHTML = '<span class="malo">' + esc(e.message) + '</span>'; }
     };
     entrada.onchange = () => { const f = entrada.files[0]; if (f) f.text().then(importar); entrada.value = ''; };
     t4.appendChild(fila(
       boton('Guardar respaldo', 'btn-primario', async () => { const r = await PF.respaldo.exportar(Aula.estado()); estadoResp.textContent = r === 'cancelado' ? '' : r === 'compartido' ? 'Listo. Elige «Guardar en Archivos» o envíatelo.' : 'Se descargó el archivo de respaldo.'; }),
       boton('Importar archivo', '', () => entrada.click()),
-      boton('Copiar como texto', '', async () => { try { await navigator.clipboard.writeText(PF.respaldo.texto(Aula.estado())); estadoResp.textContent = 'Copiado. Pégalo en una nota o mensaje para guardarlo.'; } catch (e) { estadoResp.textContent = 'No se pudo copiar; usa «Guardar respaldo».'; } }),
+      boton('Copiar como texto', '', async () => { try { await navigator.clipboard.writeText(PF.respaldo.texto(Aula.estado())); PF.respaldo.marcar(); estadoResp.textContent = 'Copiado. Pégalo en una nota o mensaje para guardarlo.'; } catch (e) { estadoResp.textContent = 'No se pudo copiar; usa «Guardar respaldo».'; } }),
       boton('Pegar texto', '', () => { const t = root.prompt('Pega aquí el texto del respaldo:'); if (t) importar(t); })
     ));
     t4.append(entrada, estadoResp);
@@ -163,6 +167,6 @@
   }
 
   root.AULA_VISTAS = root.AULA_VISTAS || [];
-  root.AULA_VISTAS.push({ id: 'ajustes', titulo: 'Ajustes', icono: ICONO, lugar: 'cabecera', punto: () => PF.actualizaciones.lista, pintar });
+  root.AULA_VISTAS.push({ id: 'ajustes', titulo: 'Ajustes', icono: ICONO, lugar: 'cabecera', punto: () => PF.actualizaciones.lista || (root.Aula && root.Aula.estado().xp > 0 && (PF.respaldo.diasDesdeUltimo() === null || PF.respaldo.diasDesdeUltimo() > 7)), pintar });
   PF.on('sync', () => { if (location.hash.slice(1).split('-')[0] === 'ajustes' && root.Aula && PF.sync.estado !== 'sincronizando') root.Aula.render(); });
 })(window);

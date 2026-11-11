@@ -100,7 +100,12 @@
 
   /* ---------- Respaldo en archivo o texto ---------- */
   const respaldo = {
-    armar(estado) { return { app: 'aula503', formato: 1, version: VER.version, fecha: new Date().toISOString(), estado }; },
+    armar(estado) { const t = ls.leer('aula503.tareas'); return Object.assign({ app: 'aula503', formato: 1, version: VER.version, fecha: new Date().toISOString(), estado }, Array.isArray(t) && t.length ? { tareas: t } : {}); },
+    // Cuántos días han pasado desde el último respaldo guardado o copiado (null = nunca)
+    diasDesdeUltimo() { const f = ls.leer('aula503.respaldo'); return f ? Math.floor((Date.now() - new Date(f).getTime()) / 86400000) : null; },
+    marcar() { ls.poner('aula503.respaldo', new Date().toISOString()); },
+    // Las tareas que trae un respaldo (lista vacía si no trae)
+    tareasDe(texto) { try { const d = JSON.parse(String(texto).trim()); return d && Array.isArray(d.tareas) ? d.tareas.filter(t => t && t.titulo && t.vence) : []; } catch (e) { return []; } },
     texto(estado) { return JSON.stringify(this.armar(estado)); },
     // Devuelve 'compartido', 'descargado' o 'cancelado'
     async exportar(estado) {
@@ -110,7 +115,7 @@
       if (entorno.ios && navigator.canShare) {
         try {
           const archivo = new File([txt], nombre, { type: 'application/json' });
-          if (navigator.canShare({ files: [archivo] })) { await navigator.share({ files: [archivo], title: 'Respaldo de Aula 503' }); return 'compartido'; }
+          if (navigator.canShare({ files: [archivo] })) { await navigator.share({ files: [archivo], title: 'Respaldo de Aula 503' }); this.marcar(); return 'compartido'; }
         } catch (e) { if (e && e.name === 'AbortError') return 'cancelado'; }
       }
       const a = document.createElement('a');
@@ -118,6 +123,7 @@
       a.download = nombre;
       document.body.appendChild(a); a.click(); a.remove();
       setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      this.marcar();
       return 'descargado';
     },
     // Acepta un respaldo de la app o el documento de progreso tal como estaba en el artefacto
@@ -221,7 +227,10 @@
     }
   };
 
-  /* ---------- Tareas (archivo que se actualiza desde el servidor, sin publicar una versión nueva) ---------- */
+  /* ---------- Tareas ----------
+     Si el sitio publica datos/tareas.json se usan y se guardan en el dispositivo; si no (el sitio público no las incluye),
+     se usan las que se importaron desde un respaldo o paquete personal (Ajustes → Importar archivo). */
+  const tareasGuardar = lista => ls.poner('aula503.tareas', lista);
   async function tareas() {
     try {
       const r = await fetch(CFG.tareas, { cache: 'no-cache' });
@@ -308,5 +317,5 @@
   // La app llama a esto en cada guardado
   function alGuardar(leer) { programarCopia(leer); sync.programar(); }
 
-  root.Plataforma = { config: CFG, version: VER, entorno, on, almacen, copias, respaldo, fusionar, sync, tareas, tutor, actualizaciones, iniciar, alGuardar };
+  root.Plataforma = { config: CFG, version: VER, entorno, on, almacen, copias, respaldo, fusionar, sync, tareas, tareasGuardar, tutor, actualizaciones, iniciar, alGuardar };
 })(window);

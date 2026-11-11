@@ -16,27 +16,7 @@ AULA.otras = [
     sugeridos: ['Detección de oportunidades', 'Design thinking', 'Lienzo de modelo de negocio (Canvas)', 'Propuesta de valor', 'Producto mínimo viable', 'Validación con clientes', 'Costos y precios', 'Pitch'] }
 ];
 
-/* Horario: [día 1-5][hora] = id de materia. Horas de 8 a 16. */
-AULA.horario = {
-  horas: [8, 9, 10, 11, 12, 13, 14, 15],
-  aula: { 8: 'LR/LIA', 9: 'LR/LIA', 10: 'LR/LIA', 11: 'LR', 12: 'E', 13: '', 14: 'LR', 15: 'B4' },
-  dias: {
-    1: { 8: 'pdm', 9: 'is', 10: 'is', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
-    2: { 8: 'pdm', 9: 'ia', 10: 'ia', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
-    3: { 8: 'pdm', 9: 'so', 10: 'so', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'act' },
-    4: { 8: 'pdm', 9: 'so', 10: 'so', 11: 'redes', 12: 'ingles', 13: 'receso', 14: 'web', 15: 'emp' },
-    5: { 8: 'ia', 9: 'ia', 10: 'is', 11: 'is', 12: 'ingles', 13: 'receso', 14: 'web' }
-  },
-  /* Bloques sugeridos de estudio en tus horas libres */
-  estudio: [
-    { dia: 1, ini: '16:30', fin: '17:30', materia: 'is', que: 'Repasa lo que vio Ing. de Software hoy y avanza el proyecto' },
-    { dia: 2, ini: '16:30', fin: '17:30', materia: 'ia', que: 'Lección de IA del día y práctica en Colab' },
-    { dia: 3, ini: '16:30', fin: '17:30', materia: 'redes', que: 'Lección de Redes y 10 min de Binario Blaster' },
-    { dia: 4, ini: '16:30', fin: '17:45', materia: 'redes', que: 'Práctica en Packet Tracer y Subnetting Rush' },
-    { dia: 5, ini: '15:00', fin: '16:00', materia: 'todas', que: 'Repaso de tarjetas de la semana y un jefe de unidad' },
-    { dia: 6, ini: '10:00', fin: '12:00', materia: 'todas', que: 'Proyectos: casos de uso, diagramas en StarUML, agente de IA' }
-  ]
-};
+/* El horario del grupo vive en js/horario.js (tomado del PDF oficial del semestre 26-27 A). */
 
 /* Juegos tipo "clasificar": cada item va a una cubeta */
 AULA.juegos = [

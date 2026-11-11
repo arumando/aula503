@@ -6,44 +6,45 @@
    - Cada archivo se guarda con su huella (los primeros 16 dígitos de su SHA-256). Al publicar una versión
      nueva solo se descargan los archivos cuya huella cambió, y se comprueba que llegaron completos.
    - La versión nueva queda «en espera» hasta que la persona toca «Actualizar» (o cierra la app). */
-const VERSION = "9.0.0+ac94080a7e";
+const VERSION = "9.1.0+3689435bab";
 const ARCHIVOS = {
  "config.js": "bc557b6f4e36f113",
- "data/extra.js": "1f488f64a31f450b",
+ "data/extra.js": "d8d20281397d2b36",
  "data/facil-ia.js": "da5b68865c1e9476",
  "data/facil-ingsoft.js": "d688eca1f5e6a25a",
  "data/facil-redes.js": "603deba06c93d675",
  "data/ia.js": "3225fa1c36b1df46",
  "data/ingsoft.js": "88bdfc4f3defe898",
- "data/redes.js": "9d3e9c5ac51fc9b4",
+ "data/redes.js": "622376f2abc8e356",
  "iconos/apple-touch-icon.png": "e3c77973de5d550b",
  "iconos/favicon.png": "32c9b944e6360daa",
  "iconos/icono-192.png": "f7e65b3930ba19b3",
  "iconos/icono-512.png": "429f55ba32194ebc",
  "iconos/icono-maskable-512.png": "ef4b90292afa6949",
  "img/plano_labredes.png": "6ee371780d8d9026",
- "index.html": "9544342437fd7d71",
- "js/ajustes.js": "bbc49fc50f05ba8d",
- "js/app.js": "f4a880d59dc2185d",
+ "index.html": "c9e9c58fd02a69fa",
+ "js/ajustes.js": "d701033521e02334",
+ "js/app.js": "dc007350bdc73b02",
  "js/arranque.js": "3f3b12bc4d3397be",
  "js/cli.js": "08e8f1a326f0deaa",
  "js/glosario.js": "b7dd88f69d30f59f",
+ "js/horario.js": "5eb3f46dea84f038",
  "js/ialabs.js": "05d521a69d94a32b",
  "js/islabs.js": "c5a1717bb37cc01f",
  "js/lecciones-is.js": "d489cf53a412cba3",
  "js/lecciones-unsij.js": "3a0e1cfa2697f0cc",
  "js/lecciones.js": "092f378a349ab0b3",
- "js/modulos.js": "217082d47f590040",
+ "js/modulos.js": "d48832c60ba6f801",
  "js/netsim.js": "4e28afe22ebd00ed",
- "js/netview.js": "a90b5bd6ef282854",
- "js/plataforma.js": "2c02523b7eed2bb4",
+ "js/netview.js": "c8b472654ce339a9",
+ "js/plataforma.js": "05c79c5aba42e494",
  "js/web/academia.js": "8c31e599592e4927",
  "js/web/cm-css.js": "284400b38b5fd38e",
- "js/web/codelab.js": "272bc0a7496e10f3",
+ "js/web/codelab.js": "4d5fe48c23b7b49a",
  "js/web/curso-fundamentos.js": "71d00af5d81a34c5",
  "js/web/curso-react.js": "e173f63f70a9f13c",
  "js/web/curso-vue.js": "d68bebc924fdab3f",
- "js/web/estilos-web.js": "7d5baf1b16740ba2",
+ "js/web/estilos-web.js": "8ca08de22dd20eb5",
  "js/web/sandbox.js": "1df935ecc95a11fb",
  "manifest.webmanifest": "68adaad654acc602",
  "vendor/acorn/acorn.min.js": "e40ac454808df477",
@@ -76,7 +77,7 @@ const ARCHIVOS = {
  "vendor/react/react-dom.development.js": "f9044a5e9c39db8b",
  "vendor/react/react.development.js": "28348fef6cb0ed8b",
  "vendor/vue/vue.global.js": "774f70a27925b6b9",
- "version.js": "3b4d8277d8d18b46"
+ "version.js": "6a5411dd9bb55145"
 };          // { 'js/app.js': 'huella', … }
 const CACHE = 'aula503-archivos';
 const DATOS = 'aula503-datos';

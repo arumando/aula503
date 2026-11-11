@@ -252,12 +252,14 @@ Para diagnosticar de abajo hacia arriba: ¿el cable está conectado (1)? ¿hay l
       md: `Cuando los datos bajan por las capas, **cada capa agrega su encabezado** (y la capa 2 agrega también un tráiler). Eso es el **encapsulamiento**. Al recibir, cada capa quita su encabezado: **desencapsulamiento**.
 
 ~~~text
-Aplicación   [ Datos ]
-Transporte   [ Enc. TCP | Datos ]                         → segmento
-Red          [ Enc. IP | Enc. TCP | Datos ]               → paquete
-Enlace       [ Enc. Eth | Enc. IP | Enc. TCP | Datos | FCS ] → trama
-Física       0101101001010...                             → bits
+Aplicación  [ Datos ]
+Transporte  [ TCP | Datos ]  → segmento
+Red         [ IP | TCP | Datos ]  → paquete
+Enlace      [ Eth | IP | TCP | Datos | FCS ]  → trama
+Física      0101101001010...  → bits
 ~~~
+
+(TCP, IP y Eth son los **encabezados** que agrega cada capa; FCS es el final de la trama.)
 
 ### Direcciones en cada capa
 | Capa | Dirección | ¿Cambia en el camino? |

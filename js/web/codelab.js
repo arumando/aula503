@@ -168,7 +168,7 @@
 
     /* Editor */
     const cm = root.CodeMirror($('.cl-editor'), {
-      lineNumbers: true, tabSize: 2, indentUnit: 2, lineWrapping: false, autoCloseBrackets: true, autoCloseTags: true,
+      lineNumbers: true, tabSize: 2, indentUnit: 2, lineWrapping: window.matchMedia('(max-width: 640px)').matches, autoCloseBrackets: true, autoCloseTags: true,
       gutters: ['cl-gut-err', 'CodeMirror-linenumbers'], extraKeys: {
         'Ctrl-Space': 'autocomplete', 'Ctrl-Enter': () => ejecutar(), 'Cmd-Enter': () => ejecutar(),
         Tab: c => c.somethingSelected() ? c.indentSelection('add') : c.replaceSelection('  ')
